@@ -243,6 +243,8 @@ List PolyAdd(List list1, List list2, List new)
 		pos2 = pos2->next;
 	}
 
+	PolyMerge(new);
+
 	return new;
 }
 
@@ -271,10 +273,11 @@ List PolyMin(List list1, List list2, List new)
 		pos->item.coefficient = -pos2->item.coefficient;
 		pos->item.exponent = pos2->item.exponent;
 		Position last = ListLast(new);
-		last->next = pos;
-		pos->next = NULL;
+		__list_add(last, pos);
 		pos2 = pos2->next;
 	}
+
+	PolyMerge(new);
 
 	return new;
 }
@@ -299,6 +302,8 @@ List PolyMul(List list1, List list2, List new)
 			pos->item.coefficient = pos1->item.coefficient * pos2->item.coefficient;
 			__list_add(last, pos);
 		}
+
+	PolyMerge(new);
 
 	return new;
 }
