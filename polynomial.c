@@ -1,8 +1,8 @@
 /**
  * @file polynomial.c
- * @date 2021-11-30
+ * @date 2022-01-09
  * @author Pineapple (pineapple_cpp@163.com)
- * 
+ *
  * @brief 一元多项式 ADT 实现
  */
 
@@ -13,7 +13,7 @@
 
 /**
  * @brief 初始化链表
- * 
+ *
  * @param list 待初始化的链表
  */
 inline void ListInit(List list)
@@ -23,9 +23,9 @@ inline void ListInit(List list)
 
 /**
  * @brief 判断链表是否为空
- * 
+ *
  * @param list 待判断的链表
- * @return _Bool 
+ * @return _Bool
  */
 inline _Bool ListIsEmpty(List list)
 {
@@ -34,18 +34,18 @@ inline _Bool ListIsEmpty(List list)
 
 /**
  * @brief 判断该位置是否为链表最后一项
- * 
+ *
  * @param pos 待判断的位置
- * @return _Bool 
+ * @return _Bool
  */
-inline _Bool PosIsLast(Position pos)
+static inline _Bool __pos_is_last(Position pos)
 {
 	return pos->next == NULL;
 }
 
 /**
  * @brief 查找链表最后一位元素
- * 
+ *
  * @param list 待查找的链表
  */
 Position ListLast(List list)
@@ -63,7 +63,7 @@ Position ListLast(List list)
 
 /**
  * @brief 查找结点中的元素
- * 
+ *
  * @param list 元素所在的链表
  * @param item 待查找的元素
  * @return Position 元素所在的位置
@@ -80,7 +80,7 @@ Position ListFind(List list, Pitem item)
 
 /**
  * @brief 查找前一个元素位置
- * 
+ *
  * @param list 元素所在的链表
  * @param item 待查找的元素
  * @return Position 元素的前一个位置
@@ -97,7 +97,7 @@ Position ListFindPrev(List list, Pitem item)
 
 /**
  * @brief 添加元素
- * 
+ *
  * @param last 链表最后一个结点的位置
  * @param pos 将要添加的元素的位置
  */
@@ -109,7 +109,7 @@ static inline void __list_add(Position last, Position new)
 
 /**
  * @brief 添加元素
- * 
+ *
  * @param list 目标链表
  * @param item 将要添加的元素
  */
@@ -130,7 +130,7 @@ static inline void __list_del(Position pos, Position prev)
 
 /**
  * @brief 删除元素
- * 
+ *
  * @param list 元素所在链表
  * @param item 指向将被删除的元素
  */
@@ -143,8 +143,20 @@ void ListDel(List list, Pitem item)
 }
 
 /**
- * @brief 在指定元素后插入一个元素
+ * @brief 在 pos 后插入 new
  * 
+ * @param pos 待插入的位置
+ * @param new 待插入的新元素
+ */
+static inline void __list_insert(Position pos, Position new)
+{
+	new->next = pos->next;
+	pos->next = new;
+}
+
+/**
+ * @brief 在指定元素后插入一个元素
+ *
  * @param list 目标链表
  * @param item 指向将要插入的元素
  */
@@ -153,13 +165,12 @@ void ListInsert(List list, Pitem item)
 	Position pos = ListFind(list, item);
 	Position new = (Position)malloc(sizeof(struct node));
 
-	new->next = pos->next;
-	pos->next = new;
+	__list_insert(pos, new);
 }
 
 /**
  * @brief 在指定元素前插入一个元素
- * 
+ *
  * @param list 目标链表
  * @param item 指向将要插入的元素
  */
@@ -168,13 +179,12 @@ void ListInsertPrev(List list, Pitem item)
 	Position prev = ListFindPrev(list, item);
 	Position new = (Position)malloc(sizeof(struct node));
 
-	new->next = prev->next;
-	prev->next = new;
+	__list_insert(prev, new);
 }
 
 /**
  * @brief 遍历链表
- * 
+ *
  * @param list 目标链表
  * @param func 指向将要执行的函数
  */
@@ -191,7 +201,7 @@ void ListForEach(List list, void (*func)(Pitem))
 
 /**
  * @brief 清空链表
- * 
+ *
  * @param list 目标链表
  */
 void ListClean(List list)
@@ -208,7 +218,7 @@ void ListClean(List list)
 
 /**
  * @brief 多项式加法
- * 
+ *
  * @param list1 多项式1
  * @param list2 多项式2
  * @param new 新的多项式
@@ -236,7 +246,7 @@ List PolyAdd(List list1, List list2, List new)
 
 /**
  * @brief 多项式减法
- * 
+ *
  * @param list1 多项式1
  * @param list2 多项式2
  * @param new 新的多项式
@@ -269,7 +279,7 @@ List PolyMin(List list1, List list2, List new)
 
 /**
  * @brief 多项式乘法
- * 
+ *
  * @param list1 多项式1
  * @param list2 多项式2
  * @param new 新的多项式
@@ -293,11 +303,11 @@ List PolyMul(List list1, List list2, List new)
 
 /**
  * @brief 合并同类项
- * 
+ *
  */
 void PolyMerge(List list)
 {
-	for (Position i = list->next; !PosIsLast(i); i = i->next)
+	for (Position i = list->next; !__pos_is_last(i); i = i->next)
 		for (Position j = i->next; j != NULL; j = j->next)
 			if (i->item.exponent == j->item.exponent)
 			{

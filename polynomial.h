@@ -1,6 +1,6 @@
 /**
  * @file polynomial.h
- * @date 2021-11-30
+ * @date 2022-01-09
  * @author Pineapple (pineapple_cpp@163.com)
  * 
  * @brief 一元多项式 ADT
@@ -27,7 +27,6 @@ typedef PtrToNode Position;
 
 void ListInit(List list);
 _Bool ListIsEmpty(List list);
-_Bool PosIsLast(Position pos);
 Position ListLast(List list);
 Position ListFind(List list, Pitem item);
 Position ListFindPrev(List list, Pitem item);
