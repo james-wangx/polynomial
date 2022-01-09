@@ -165,6 +165,7 @@ void ListInsert(List list, Pitem item)
 	Position pos = ListFind(list, item);
 	Position new = (Position)malloc(sizeof(struct node));
 
+	new->item = *item;
 	__list_insert(pos, new);
 }
 
@@ -179,6 +180,7 @@ void ListInsertPrev(List list, Pitem item)
 	Position prev = ListFindPrev(list, item);
 	Position new = (Position)malloc(sizeof(struct node));
 
+	new->item = *item;
 	__list_insert(prev, new);
 }
 
