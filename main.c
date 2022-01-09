@@ -1,6 +1,6 @@
 /**
  * @file main.c
- * @date 2021-11-30
+ * @date 2022-01-09
  * @author Pineapple (pineapple_cpp@163.com)
  *
  * @brief
@@ -49,12 +49,6 @@ int main(void)
     List poly = PolyMul(&list1, &list2, &new);
 
     printf("new: ");
-    ListForEach(poly, print_list);
-    printf("\n");
-
-    // 合并同类项
-    PolyMerge(poly);
-    printf("new2: ");
     ListForEach(poly, print_list);
     printf("\n");
 
